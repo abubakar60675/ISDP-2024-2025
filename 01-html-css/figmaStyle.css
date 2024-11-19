@@ -1,0 +1,120 @@
+:root {
+  --dark: #1e1e1e;
+  --darkBlue: #21293b;
+  --white: #ffffff;
+  --gray: #535f79;
+  --aqua: linear-gradient(106.6deg, #76e2c6 0%, #22a081 99.84%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--dark);
+}
+
+.container {
+  display: flex;
+  min-height: calc(100vh - 50px);
+}
+footer {
+  padding: 40px 100px 30px 100px;
+  background: var(--darkBlue);
+  color: var(--white);
+  position: relative;
+  z-index: 1;
+}
+
+aside {
+  background: var(--darkBlue);
+  color: var(--white);
+  width: 228px;
+  padding: 30px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+}
+.mainWrapper {
+  margin-left: 228px;
+  width: calc(100% - 228px);
+  flex: 1;
+}
+header {
+  background: var(--darkBlue);
+  color: var(--white);
+  height: 60px;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.listWrapper {
+  margin-top: 100px;
+}
+.listWrapper ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.listWrapper ul li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  color: var(--gray);
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 50px;
+}
+
+.listWrapper ul li:hover a {
+  background: var(--aqua);
+}
+
+.listWrapper ul li:hover a span {
+  color: var(--white);
+}
+.listWrapper ul li:hover a svg path {
+  fill: var(--white);
+}
+main {
+  width: 100%;
+  margin-top: 60px;
+  padding: 50px;
+}
+
+.card {
+  background: #232c3d;
+  border: 2px solid #333e56;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+.card img {
+  min-width: 28px;
+  height: 28px;
+}
+.cross {
+  background: var(--dark);
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -10px;
+  right: 20px;
+}
