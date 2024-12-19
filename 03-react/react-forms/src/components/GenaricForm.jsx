@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const initialState = {
   firstName: "",
@@ -13,26 +13,52 @@ const initialState = {
 };
 
 const GenaricForm = () => {
-  const [user, setUser] = useState(initialState);
+  const [userFormData, setUserFormData] = useState(initialState);
   const [users, setUsers] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     if (name === "isTeacher") {
-      setUser({ ...user, [name]: event.target.checked });
+      setUserFormData({ ...userFormData, [name]: event.target.checked });
     } else {
-      setUser({ ...user, [name]: value });
+      setUserFormData({ ...userFormData, [name]: value });
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("user", user);
-    setUsers([...users, { ...user, id: Date.now() }]);
-    setUser(initialState);
+    console.log("userFormData", userFormData);
+
+    if (isEditing) {
+      const newUsers = users.map((item) =>
+        item.id === userFormData.id ? { ...userFormData } : item
+      );
+      setUsers(newUsers);
+    } else {
+      setUsers([...users, { ...userFormData, id: Date.now() }]);
+    }
+
+    setUserFormData(initialState);
+    if (isEditing) {
+      setIsEditing(false);
+    }
   };
-  console.log("users", users);
+  console.log("isEditing", isEditing);
+
+  const handleDeleteUser = (id) => {
+    const newUsers = users.filter((item) => item.id !== id);
+    setUsers(newUsers);
+  };
+
+  const handleUpdateUser = (user) => {
+    console.log("user", user);
+    setUserFormData(user);
+    setIsEditing(true);
+    // const foundUser = users.find((item) => item.id === id);
+    // console.log("foundUser", foundUser);
+  };
 
   return (
     <>
@@ -45,7 +71,7 @@ const GenaricForm = () => {
               type="text"
               placeholder="Enter first name"
               className="w-full outline-none px-2 py-3 border"
-              value={user.firstName}
+              value={userFormData.firstName}
               onChange={handleChange}
               name="firstName"
             />
@@ -57,7 +83,7 @@ const GenaricForm = () => {
               type="text"
               placeholder="Enter last name"
               className="w-full outline-none px-2 py-3 border "
-              value={user.lastName}
+              value={userFormData.lastName}
               onChange={handleChange}
               name="lastName"
             />
@@ -69,7 +95,7 @@ const GenaricForm = () => {
               type="text"
               placeholder="Enter username"
               className="w-full outline-none px-2 py-3 border "
-              value={user.username}
+              value={userFormData.username}
               onChange={handleChange}
               name="username"
             />
@@ -81,7 +107,7 @@ const GenaricForm = () => {
               type="email"
               placeholder="Enter email"
               className="w-full outline-none px-2 py-3 border "
-              value={user.email}
+              value={userFormData.email}
               onChange={handleChange}
               name="email"
             />
@@ -94,7 +120,7 @@ const GenaricForm = () => {
               type="password"
               placeholder="Enter password"
               className="w-full outline-none px-2 py-3 border "
-              value={user.password}
+              value={userFormData.password}
               onChange={handleChange}
               name="password"
             />
@@ -110,7 +136,7 @@ const GenaricForm = () => {
               value="male"
               name="gender"
               onChange={handleChange}
-              checked={user.gender === "male"}
+              checked={userFormData.gender === "male"}
             />
             <label htmlFor="male">Male</label>
             <input
@@ -118,7 +144,7 @@ const GenaricForm = () => {
               id="female"
               value="female"
               name="gender"
-              checked={user.gender === "female"}
+              checked={userFormData.gender === "female"}
               onChange={handleChange}
             />
             <label htmlFor="female">Female</label>
@@ -128,7 +154,7 @@ const GenaricForm = () => {
               type="checkbox"
               name="isTeacher"
               id="isTeacher"
-              checked={user.isTeacher}
+              checked={userFormData.isTeacher}
               onChange={handleChange}
             />
             <label htmlFor="isTeacher">Is Teacher?</label>
@@ -141,7 +167,7 @@ const GenaricForm = () => {
               name="country"
               id="country"
               className="w-full outline-none px-2 py-3 border "
-              value={user.country}
+              value={userFormData.country}
               onChange={handleChange}
             >
               <option>Select</option>
@@ -159,7 +185,7 @@ const GenaricForm = () => {
               name="dateOfBirth"
               id="dateOfBirth"
               className="w-full outline-none px-2 py-3 border "
-              value={user.dateOfBirth}
+              value={userFormData.dateOfBirth}
               onChange={handleChange}
             />
           </div>
@@ -172,13 +198,50 @@ const GenaricForm = () => {
         </form>
       </div>
       <div className="mt-5">
-        {users.map((item) => {
-          return (
-            <div key={item.id}>
-              <p>{item.email}</p>
-            </div>
-          );
-        })}
+        <table>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Username</th>
+              <th>Gender</th>
+              <th>Is Teacher</th>
+              <th>Country</th>
+              <th>Date of Birth</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((item) => {
+              return (
+                <tr key={item.id}>
+                  <td>{item.firstName}</td>
+                  <td>{item.lastName}</td>
+                  <td>{item.email}</td>
+                  <td>{item.username}</td>
+                  <td>{item.gender === "male" ? "Male" : "Female"}</td>
+                  <td>{item.isTeacher ? "Yes" : "No"}</td>
+                  <td>{item.country}</td>
+                  <td>{item.dateOfBirth}</td>
+                  <td>
+                    <div>
+                      <button
+                        className="bg-blue-400 text-white border px-2 py-3"
+                        onClick={() => handleDeleteUser(item.id)}
+                      >
+                        Delete
+                      </button>
+                      <button onClick={() => handleUpdateUser(item)}>
+                        Edit
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );

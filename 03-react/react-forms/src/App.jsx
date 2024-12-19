@@ -8,7 +8,7 @@ import GenaricForm from "./components/GenaricForm";
 function App() {
   return (
     <>
-      <div className="max-w-xs m-auto flex items-center justify-center min-h-dvh">
+      <div className="w-full p-5 m-auto flex items-center justify-center min-h-dvh">
         <div className="w-full flex flex-col gap-2">
           {/* <RefForm /> */}
           {/* <SimpleStateForm /> */}
