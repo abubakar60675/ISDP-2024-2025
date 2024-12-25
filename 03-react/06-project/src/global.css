@@ -10,6 +10,7 @@
     --customBlackGray: #21293b;
     --customLightGray: #333e56;
     --customGreen: #22a081;
+    --customDarkBlue: #19202e;
   }
 }
 
@@ -33,4 +34,22 @@ body {
 }
 .customGreenGradientShadow {
   box-shadow: 0px 6px 20px 0px #22a08166;
+}
+
+.sideItem:hover {
+  background: linear-gradient(106.6deg, #76e2c6 0%, #22a081 99.84%);
+  box-shadow: 0px 6px 20px 0px #22a08166;
+}
+
+.sideItem:hover .customIconPathFill path {
+  fill: var(--customWhite);
+}
+
+.activeSideItem {
+  color: var(--customWhite);
+  background: linear-gradient(106.6deg, #76e2c6 0%, #22a081 99.84%);
+  box-shadow: 0px 6px 20px 0px #22a08166;
+}
+.activeSideItem .customIconPathFill path {
+  fill: var(--customWhite);
 }

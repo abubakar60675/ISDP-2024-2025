@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import LoadingButton from "../../components/buttons/LoadingButton";
 import FormInput from "../../components/forms/FormInput";
 import { LogoImage, routes } from "../../lib/utils/constants";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { validateSchema } from "../../lib/utils/helpers/validator";
 import { LoginSchema } from "../../lib/utils/schemas/AuthSchema";
+import axios from "axios";
+import { useAtom } from "jotai";
+import { loggedUserAtom } from "../../lib/store";
+import { LOGIN_URL } from "../../lib/utils/constants/apiRoutes";
 
 const initialState = {
-  email: "",
+  username: "",
   password: "",
 };
 
 const Login = () => {
   const [auth, setAuth] = useState(initialState);
   const [errors, setErrors] = useState({});
+  const [loggedUser, setLoggedUser] = useAtom(loggedUserAtom);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,13 +40,47 @@ const Login = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
-    alert("Form sUBMITEED");
+    setIsLoading(true);
+    // try {
+    //   const response = await fetch("https://dummyjson.com/user/login", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       username: "emilys",
+    //       password: "emilyspass",
+    //       expiresInMins: 30,
+    //     }),
+    //   });
+    //   const data = await response.json();
+    //   console.log(data);
+    // } catch (error) {
+    //   console.error("Error Occurred:", error);
+    // }
 
-    console.log(auth);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        {
+          username: auth.username,
+          password: auth.password,
+          expiresInMins: 43200,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      console.log("api resposnste", response);
+      setLoggedUser(response.data);
+      navigate(routes.HOME);
+    } catch (error) {
+      console.error("Error Occurred:", error);
+    }
+    setIsLoading(false);
   };
   return (
     <>
@@ -56,11 +98,11 @@ const Login = () => {
           <div className="bg-customBlackGray px-5 py-10 rounded-[20px] w-full">
             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
               <FormInput
-                placeholder="Enter Email Address"
-                name="email"
-                value={auth.email}
+                placeholder="Enter Username"
+                name="username"
+                value={auth.username}
                 handleChange={handleChange}
-                error={errors?.email}
+                error={errors?.username}
               />
 
               <FormInput
@@ -72,8 +114,8 @@ const Login = () => {
                 error={errors?.password}
               />
 
-              <LoadingButton type="submit" isLoading={false}>
-                Sign In
+              <LoadingButton type="submit" isLoading={isLoading}>
+                {isLoading ? " Submitting..." : "Submit"}
               </LoadingButton>
             </form>
           </div>
