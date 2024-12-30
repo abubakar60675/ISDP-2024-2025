@@ -1,14 +1,6 @@
 import React from "react";
 
-const FormSelect = ({
-  label,
-
-  name,
-  value,
-  handleChange,
-  error,
-  children,
-}) => {
+const FormSelect = ({ label, name, value, handleChange, error, children }) => {
   return (
     <>
       <div>
