@@ -1,20 +1,11 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router";
-import { AppLogoImage, routes } from "../../lib/utils/constants";
+import { NavLink, useLocation } from "react-router";
 import { sidebarRoutes } from "../../lib/utils/constants";
 
 const Sidebar = () => {
-  const location = useLocation();
-
-  console.log("location", location.pathname);
-
   return (
     <>
       <aside className="w-[230px] h-dvh bg-customDarkBlue px-5 py-7 fixed top-0 left-0 overflow-auto">
-        <Link to={routes.HOME} className="text-white">
-          <img src={AppLogoImage} alt="App Logo" />
-        </Link>
-
         <ul className="mt-10 flex flex-col gap-3">
           {sidebarRoutes.map((item) => {
             return (

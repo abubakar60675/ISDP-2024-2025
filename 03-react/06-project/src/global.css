@@ -53,3 +53,28 @@ body {
 .activeSideItem .customIconPathFill path {
   fill: var(--customWhite);
 }
+
+option {
+  background-color: var(--customLightGray);
+  color: var(--customWhite);
+}
+
+.gJnpNS,
+.rdt_TableHeadRow,
+.rdt_Pagination,
+.rdt_TableCell,
+.rdt_TableCol {
+  background-color: var(--customDarkBlue) !important;
+  color: var(--customWhite) !important;
+}
+
+.rdt_TableHeadRow {
+  border: 0px !important;
+}
+.rdt_TableHeadRow {
+  border: 0px !important;
+}
+
+.rdt_Pagination svg {
+  fill: var(--customWhite) !important;
+}

@@ -11,8 +11,8 @@ const AppLayout = () => {
         <Sidebar />
         <div className="ml-[230px] flex-1">
           <Header />
-          <div className="mt-16">
-            <main className="min-h-[calc(100dvh-128px)] p-5">
+          <div>
+            <main className="min-h-[calc(100dvh-128px)] p-5 relative">
               <Outlet />
             </main>
             <Footer />

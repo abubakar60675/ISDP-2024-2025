@@ -4,10 +4,13 @@ import Home from "./pages/Home";
 import { routes } from "./lib/utils/constants";
 import NotFound from "./pages/misc/NotFound";
 import UsersListing from "./pages/users/UsersListing";
-import Functions from "./pages/Functions";
 import AppLayout from "./components/layout/AppLayout";
 import CheckUserAuth from "./lib/middlewares/CheckUserAuth";
 import CheckIfUserAlreadyLoggedIn from "./lib/middlewares/CheckIfUserAlreadyLoggedIn";
+import ProductsListing from "./pages/products/ProductsListing";
+import ProductDetail from "./pages/products/ProductDetail";
+import Checkout from "./pages/checkout/Checkout";
+import AddEditUser from "./pages/users/AddEditUser";
 
 function App() {
   return (
@@ -19,8 +22,18 @@ function App() {
         <Route element={<CheckUserAuth />}>
           <Route element={<AppLayout />}>
             <Route index element={<Home />} />
+            <Route path={routes.PRODUCTS} element={<ProductsListing />} />
+            <Route
+              path={`${routes.PRODUCTS}/:id`}
+              element={<ProductDetail />}
+            />
             <Route path={routes.USERS} element={<UsersListing />} />
-            <Route path={routes.FUNCTION} element={<Functions />} />
+            <Route path={routes.USERS_ADD} element={<AddEditUser />} />
+            <Route
+              path={`${routes.USERS_EDIT}/:id`}
+              element={<AddEditUser />}
+            />
+            <Route path={routes.CHECKOUT} element={<Checkout />} />
           </Route>
         </Route>
 

@@ -1,6 +1,9 @@
 export const routes = {
   HOME: "/",
   LOGIN: "/login",
+  PRODUCTS: "/products",
   USERS: "/users",
-  FUNCTION: "/function",
+  USERS_ADD: "/users/add",
+  USERS_EDIT: "/users/edit",
+  CHECKOUT: "/checkout",
 };

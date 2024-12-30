@@ -9,6 +9,7 @@ import axios from "axios";
 import { useAtom } from "jotai";
 import { loggedUserAtom } from "../../lib/store";
 import { LOGIN_URL } from "../../lib/utils/constants/apiRoutes";
+import { toast } from "sonner";
 
 const initialState = {
   username: "",
@@ -74,11 +75,12 @@ const Login = () => {
         }
       );
 
-      console.log("api resposnste", response);
       setLoggedUser(response.data);
       navigate(routes.HOME);
+      toast.success("Logged In Successfully");
     } catch (error) {
       console.error("Error Occurred:", error);
+      toast.error(error.response.data.message);
     }
     setIsLoading(false);
   };
@@ -115,7 +117,7 @@ const Login = () => {
               />
 
               <LoadingButton type="submit" isLoading={isLoading}>
-                {isLoading ? " Submitting..." : "Submit"}
+                Submit
               </LoadingButton>
             </form>
           </div>
